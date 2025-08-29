@@ -1,11 +1,8 @@
 from clases_base_abstractas import Observer, DisplayElement
-
-from typing import TYPE_CHECKING
-if TYPE_CHECKING:
-    from Subject import WeatherData
+from Subject import WeatherData
 
 class CurrentConditionsDisplay(Observer, DisplayElement):
-    def __init__(self, weather_data: WeatherData):
+    def __init__(self, weather_data: "WeatherData"):
         self._temperature = 0.0
         self._humidity = 0.0
         self._weather_data = weather_data # Mantiene una referencia al sujeto
@@ -20,7 +17,7 @@ class CurrentConditionsDisplay(Observer, DisplayElement):
         print(f"Current conditions: {self._temperature}°C degrees and {self._humidity}% humidity")
 
 class StatisticsDisplay(Observer, DisplayElement):
-    def __init__(self, weather_data: WeatherData):
+    def __init__(self, weather_data: "WeatherData"):
         self._max_temp = -float('inf')
         self._min_temp = float('inf')
         self._temp_sum = 0.0
@@ -41,7 +38,7 @@ class StatisticsDisplay(Observer, DisplayElement):
         print(f"Avg/Max/Min temperature = {avg_temp}/{self._max_temp}/{self._min_temp}")
 
 class ForecastDisplay(Observer, DisplayElement):
-    def __init__(self, weather_data: WeatherData):
+    def __init__(self, weather_data: "WeatherData"):
         self._current_pressure = 29.92 # Presión por defecto
         self._last_pressure = 0.0
         self._weather_data = weather_data
