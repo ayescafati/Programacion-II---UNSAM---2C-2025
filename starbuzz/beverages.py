@@ -12,12 +12,19 @@ class Beverage(ABC):
     S_TALL = "Tall"
     S_GRANDE = "Grande"
     S_VENTI = "Venti"
+    
+    VALID_SIZES = {S_TALL, S_GRANDE, S_VENTI}
 
     def __init__(self):
         self.description = "Bebida Desconocida"
         self._size = Beverage.S_TALL # por default
 
     def set_size(self, size: str):
+        if size not in Beverage.VALID_SIZES:
+            raise ValueError(
+                f"Tamaño inválido: '{size}'."
+                f"Debe ser uno de {Beverage.VALID_SIZES}"
+            )
         self._size = size
 
     def get_size (self) -> str:

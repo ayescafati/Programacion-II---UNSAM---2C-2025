@@ -51,6 +51,14 @@ def main():
     order = build_beverage(HouseBlend(), Beverage.S_VENTI, ["soy", "mocha", "whip"])
     print(f"Pedido 5 (builder): {order.get_description()} ({order.get_size()}) ${order.cost():.2f}")
 
+    #Prueba error
+    coffee = Espresso()
+
+    coffee.set_size(Beverage.S_GRANDE)   # válido
+    print(coffee.get_size())             # "Grande"
+
+    coffee.set_size("Gigante")           # ❌ lanza ValueError
+
 
 if __name__ == "__main__":
     main()
