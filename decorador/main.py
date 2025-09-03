@@ -1,23 +1,33 @@
+# main.py
+# Script principal para probar el patrón Decorator.
+
+from beverages import Espresso, DarkRoast, HouseBlend
+from condiments import Mocha, Whip, Soy
+
 def main():
-    weather_data = WeatherData()
+    """
+    Función principal que simula la preparación de cafés en Starbuzz.
+    """
+    print("Bienvenido a Starbuzz Coffee!")
+    print("--- Preparando pedidos ---")
 
-    current_display = CurrentConditionsDisplay(weather_data)
-    stats_display = StatisticsDisplay(weather_data)
-    forecast_display = ForecastDisplay(weather_data)
+    # Pedido 1: Un Espresso simple, sin condimentos.
+    beverage1 = Espresso()
+    print(f"Pedido 1: {beverage1.get_description()} ${beverage1.cost():.2f}")
 
-    print("Weather Station 1.0")
-    print("-------------------")
+    # Pedido 2: Un DarkRoast con doble Mocha y Crema.
+    beverage2 = DarkRoast()
+    beverage2 = Mocha(beverage2)  # Envolvemos con el primer Mocha
+    beverage2 = Mocha(beverage2)  # Envolvemos con el segundo Mocha
+    beverage2 = Whip(beverage2)   # Envolvemos con Crema
+    print(f"Pedido 2: {beverage2.get_description()} ${beverage2.cost():.2f}")
 
-    weather_data.set_measurements(26.6, 65, 30.4)
-    print("---")
-    weather_data.set_measurements(27.7, 70, 29.2)
-    print("---")
-    weather_data.set_measurements(25.5, 90, 29.2)
-
-    # Ejemplo de desregistro (opcional)
-    # print("\n--- Forecast display unsubscribed ---")
-    # weather_data.remove_observer(forecast_display)
-    # weather_data.set_measurements(28.0, 88, 30.0)
+    # Pedido 3: Un HouseBlend con Soja, Mocha y Crema.
+    beverage3 = HouseBlend()
+    beverage3 = Soy(beverage3)
+    beverage3 = Mocha(beverage3)
+    beverage3 = Whip(beverage3)
+    print(f"Pedido 3: {beverage3.get_description()} ${beverage3.cost():.2f}")
 
 if __name__ == "__main__":
     main()
