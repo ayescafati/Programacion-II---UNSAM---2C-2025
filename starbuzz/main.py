@@ -1,8 +1,10 @@
 # main.py
 # Script principal para probar el patrón Decorator.
 
-from beverages import Espresso, DarkRoast, HouseBlend
-from condiments import Mocha, Whip, Soy
+from beverages import Espresso, DarkRoast, HouseBlend, Beverage
+from condiments import Mocha, Whip, Soy, Caramel  # <- importa Caramel
+from builder import build_beverage   # importa builder
+
 
 def main():
     """
@@ -28,6 +30,27 @@ def main():
     beverage3 = Mocha(beverage3)
     beverage3 = Whip(beverage3)
     print(f"Pedido 3: {beverage3.get_description()} ${beverage3.cost():.2f}")
+
+    # Pedido 4: Espresso con Caramelo y Crema
+    beverage4 = Caramel(Espresso())
+    beverage4 = Whip(beverage4)
+    print(f"Pedido 4: {beverage4.get_description()} ${beverage4.cost():.2f}")
+
+    # Ejemplo 1: HouseBlend Venti + Soy
+    hb = HouseBlend()
+    hb.set_size(Beverage.S_VENTI)
+    hb = Soy(hb)
+    print(f"Ej 1: {hb.get_description()} ({hb.get_size()}) ${hb.cost():.2f}")
+
+    # Ejemplo 2: DarkRoast Grande + doble Mocha + Crema
+    dr = DarkRoast();dr.set_size(Beverage.S_GRANDE)
+    dr = Mocha(Mocha(Whip(dr)))
+    print(f"EJ 2: {dr.get_description()}({dr.get_size()}) ${dr.cost():.2f}")
+
+    # Pedido con builder
+    order = build_beverage(HouseBlend(), Beverage.S_VENTI, ["soy", "mocha", "whip"])
+    print(f"Pedido 5 (builder): {order.get_description()} ({order.get_size()}) ${order.cost():.2f}")
+
 
 if __name__ == "__main__":
     main()
