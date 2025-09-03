@@ -18,13 +18,14 @@ class Beverage(ABC):
     def __init__(self):
         self.description = "Bebida Desconocida"
         self._size = Beverage.S_TALL # por default
-
+    
+    def __str__(self):
+        return f"{self.get_description()} ({self.get_size()})"
+    
     def set_size(self, size: str):
         if size not in Beverage.VALID_SIZES:
-            raise ValueError(
-                f"Tamaño inválido: '{size}'."
-                f"Debe ser uno de {Beverage.VALID_SIZES}"
-            )
+            opciones = ", ".join(sorted(Beverage.VALID_SIZES))
+            raise ValueError(f"Tamaño inválido: '{size}'. Debe ser uno de {opciones}.")
         self._size = size
 
     def get_size (self) -> str:
@@ -72,6 +73,7 @@ class Decaf(Beverage):
     Café Descafeinado, un tipo específico de bebida.
     """
     def __init__(self):
+        super().__init__() 
         self.description = "Café Descafeinado"
 
     def cost(self) -> float:
